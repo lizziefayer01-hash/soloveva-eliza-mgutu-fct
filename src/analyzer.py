@@ -74,9 +74,13 @@ def optimize_fertilizer(soil_analysis, target_yield):
     Returns:
         dict: Рекомендации по удобрениям
     """
-    n_deficit = max(0, target_yield * 0.03 - soil_analysis.get('nitrogen', 0))
-    p_deficit = max(0, target_yield * 0.01 - soil_analysis.get('phosphorus', 0))
-    k_deficit = max(0, target_yield * 0.02 - soil_analysis.get('potassium', 0))
+    n_base = soil_analysis.get('nitrogen', 0)
+    p_base = soil_analysis.get('phosphorus', 0)
+    k_base = soil_analysis.get('potassium', 0)
+
+    n_deficit = max(0, target_yield * 0.03 - n_base)
+    p_deficit = max(0, target_yield * 0.01 - p_base)
+    k_deficit = max(0, target_yield * 0.02 - k_base)
 
     return {
         "nitrogen_kg_ha": round(n_deficit, 1),
@@ -96,4 +100,3 @@ if __name__ == "__main__":
 
     growth_info = analyze_growth_stage(0.72, 45)
     print(f"Стадия роста: {growth_info['growth_stage']}")
-
