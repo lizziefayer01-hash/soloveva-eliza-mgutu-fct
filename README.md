@@ -1,1 +1,5 @@
-# soloveva-eliza-mgutu-fct
+Проект от ФЦТ МГУТУ
+Разрабатывается студентами факультета цифровых технологий МГУТУ им. К.Г. Разумовского в рамках подготовки к акселераторам Leader-ID. Презентация npоектa: https://pt.2035.university/project/simulacia-modeli-emocii-cvetka-cerez-nejrointerfejs-gorska
+
+Научная основа
+Проект продолжвет исследования, проведённые в МГУТУ:
