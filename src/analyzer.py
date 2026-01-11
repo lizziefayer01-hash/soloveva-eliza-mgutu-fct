@@ -3,14 +3,15 @@
 MVP версия для акселератора Leader.ID
 """
 
+
 def predict_wheat_yield(soil_params, weather_data):
     """
     Прогнозирует урожайность пшеницы на основе математической модели
-    
+
     Args:
         soil_params (dict): Параметры почвы
         weather_data (dict): Метеорологические данные
-    
+
     Returns:
         float: Прогнозируемая урожайность (ц/га)
     """
@@ -19,24 +20,24 @@ def predict_wheat_yield(soil_params, weather_data):
     b = 0.3  # Коэффициент для температуры
     c = 0.2  # Коэффициент для NPK
     d = 15.0  # Базовый уровень урожайности
-    
+
     soil_moisture = soil_params.get('moisture', 0.7)
     temperature = weather_data.get('avg_temperature', 20.0)
     npk = soil_params.get('npk_index', 0.6)
-    
+
     yield_prediction = a * soil_moisture + b * temperature + c * npk + d
-    
+
     return round(yield_prediction, 2)
 
 
 def analyze_growth_stage(ndvi_value, days_after_sowing):
     """
     Анализирует стадию роста пшеницы
-    
+
     Args:
         ndvi_value (float): Значение NDVI (0-1)
         days_after_sowing (int): Дней после посева
-    
+
     Returns:
         dict: Информация о стадии роста
     """
@@ -52,7 +53,7 @@ def analyze_growth_stage(ndvi_value, days_after_sowing):
     else:
         stage = "Колошение"
         recommendation = "Подготовка к уборке"
-    
+
     return {
         "growth_stage": stage,
         "ndvi": ndvi_value,
@@ -65,18 +66,18 @@ def analyze_growth_stage(ndvi_value, days_after_sowing):
 def optimize_fertilizer(soil_analysis, target_yield):
     """
     Оптимизация внесения удобрений
-    
+
     Args:
         soil_analysis (dict): Анализ почвы
         target_yield (float): Целевая урожайность
-    
+
     Returns:
         dict: Рекомендации по удобрениям
     """
     n_deficit = max(0, target_yield * 0.03 - soil_analysis.get('nitrogen', 0))
     p_deficit = max(0, target_yield * 0.01 - soil_analysis.get('phosphorus', 0))
     k_deficit = max(0, target_yield * 0.02 - soil_analysis.get('potassium', 0))
-    
+
     return {
         "nitrogen_kg_ha": round(n_deficit, 1),
         "phosphorus_kg_ha": round(p_deficit, 1),
@@ -89,10 +90,10 @@ def optimize_fertilizer(soil_analysis, target_yield):
 if __name__ == "__main__":
     soil_data = {'moisture': 0.75, 'npk_index': 0.65}
     weather_data = {'avg_temperature': 22.5, 'precipitation': 350}
-    
+
     yield_pred = predict_wheat_yield(soil_data, weather_data)
     print(f"Прогнозируемая урожайность: {yield_pred} ц/га")
-    
+
     growth_info = analyze_growth_stage(0.72, 45)
     print(f"Стадия роста: {growth_info['growth_stage']}")
 
